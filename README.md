@@ -53,9 +53,9 @@ pip install -r requirements.txt
 
 ### 4. Set up at least one provider
 
-You only need **one** of these — pick whichever suits you. You can also set up both and switch between them live in the UI.
+You only need **one** of these - pick whichever suits you. You can also set up both and switch between them live in the UI.
 
-#### Option A — Ollama (fully local, no key)
+#### Option A - Ollama (fully local, no key)
 
 1. Install from **https://ollama.com**
 2. Pull a model:
@@ -70,7 +70,7 @@ You only need **one** of these — pick whichever suits you. You can also set up
 2. Create an API key
 3. Set it as an environment variable:
    ```bash
-   export GROQ_API_KEY=gsk_...        # Windows: set GROQ_API_KEY=gsk_...
+   set GROQ_API_KEY=gsk_... 
    ```
 
 ### 5. Run the app
@@ -81,7 +81,7 @@ uvicorn app:app --reload
 
 ### 6. Open it
 
-Go to **http://localhost:8000** — use the toggle next to "run pipeline" to switch between **ollama (local)** and **groq (free api)**.
+Go to **http://localhost:8000** - use the toggle next to "run pipeline" to switch between **ollama (local)** and **groq (free api)**.
 
 ---
 
@@ -109,11 +109,11 @@ export LLM_PROVIDER=groq   # or "ollama" (default)
 
 ```
 researchtrace/
-├── app.py              # FastAPI backend — both providers + agents + API routes
+├── app.py              # FastAPI backend - both providers + agents + API routes
 ├── requirements.txt
 ├── static/
 │   └── index.html      # Single-page frontend with the provider toggle
-└── experiments/        # Auto-created — one JSON file per run, tagged with provider used
+└── experiments/        # Auto-created - one JSON file per run, tagged with provider used
 ```
 
 ---
@@ -126,7 +126,7 @@ researchtrace/
 | `GET` | `/api/runs` | List all past runs |
 | `GET` | `/api/runs/{id}` | Get a single run |
 | `GET` | `/api/runs/{id}/compare/{other_id}` | Compare two runs (ADO-style) |
-| `GET` | `/api/health` | Check Ollama + Groq readiness — drives the UI toggle dots |
+| `GET` | `/api/health` | Check Ollama + Groq readiness - drives the UI toggle dots |
 
 ### Example with curl
 
@@ -155,7 +155,7 @@ User question
        │
        ▼
 ┌─────────────┐
-│  Guardrail  │  Checks confidence, flags risk — can BLOCK the pipeline
+│  Guardrail  │  Checks confidence, flags risk - can BLOCK the pipeline
 └──────┬──────┘
        │
   passed/caution?
@@ -169,19 +169,19 @@ User question
   Saved to experiments/<run_id>.json (includes which provider/model was used)
 ```
 
-All four agents call the **same `call_llm()` function** — they differ only in system prompt and role, and the provider can be swapped per-run without touching the agent logic. This mirrors the orchestration pattern from the NASA AKD talk: the architecture is what matters, not which model sits underneath it.
+All four agents call the **same `call_llm()` function** - they differ only in system prompt and role, and the provider can be swapped per-run without touching the agent logic. This mirrors the orchestration pattern from the NASA AKD talk: the architecture is what matters, not which model sits underneath it.
 
 ---
 
 ## Concepts mapped to code
 
-- **`call_llm()` / `call_ollama()` / `call_groq()`** — provider-agnostic dispatch; every agent is just a different system prompt over whichever backend is selected
-- **`run_planner()`** — agentic decomposition (NASA AKD style)
-- **`run_guardrail()`** — risk agent with BLOCK capability (IBM Granite Guardian)
-- **`save_run()` / `load_all_runs()`** — provenance + data reuse (ADO), now also recording which provider/model produced each run
-- **`/api/runs/{id}/compare/{other_id}`** — run comparison (ADO experiment campaigns)
-- **`/api/health`** — reports readiness of both providers so the UI toggle can show live status dots
-- **Pydantic `ExperimentRun` schema** — structured input/output contracts
+- **`call_llm()` / `call_ollama()` / `call_groq()`** - provider-agnostic dispatch; every agent is just a different system prompt over whichever backend is selected
+- **`run_planner()`** - agentic decomposition (NASA AKD style)
+- **`run_guardrail()`** - risk agent with BLOCK capability (IBM Granite Guardian)
+- **`save_run()` / `load_all_runs()`** - provenance + data reuse (ADO), now also recording which provider/model produced each run
+- **`/api/runs/{id}/compare/{other_id}`** - run comparison (ADO experiment campaigns)
+- **`/api/health`** - reports readiness of both providers so the UI toggle can show live status dots
+- **Pydantic `ExperimentRun` schema** - structured input/output contracts
 
 ---
 
@@ -193,8 +193,8 @@ All four agents call the **same `call_llm()` function** — they differ only in 
 | "Model not found" (Ollama) | Run `ollama pull llama3.2` (or whichever model you set) |
 | "GROQ_API_KEY environment variable not set" | Get a free key at console.groq.com and `export GROQ_API_KEY=...` |
 | "Groq API key was rejected" | Double-check you copied the full key, including the `gsk_` prefix |
-| "Groq free-tier rate limit hit" | Wait a minute — free tier allows ~30 requests/min — then retry |
-| Ollama responses are slow | Normal on CPU-only machines — try a smaller model like `phi3` or `llama3.2:1b`, or switch to Groq in the UI |
+| "Groq free-tier rate limit hit" | Wait a minute - free tier allows ~30 requests/min - then retry |
+| Ollama responses are slow | Normal on CPU-only machines - try a smaller model like `phi3` or `llama3.2:1b`, or switch to Groq in the UI |
 
 
 
