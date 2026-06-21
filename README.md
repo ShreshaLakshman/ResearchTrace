@@ -2,12 +2,14 @@
 
 An **open-source** portfolio project inspired by the **Open Source Science Dublin Meetup** (IBM Research × PyData Ireland), built after attending the event to test whether I'd actually understood the core ideas from the talks.
 
+# Motive of the project
+What does it take to build a guardrailed, reproducible multi-agent research pipeline using only free and open tools?
 
 ## What this project is
 
 The meetup covered three talks: NASA's multi-agent research platform, IBM's approach to taking AI agents from prototype to production (with guardrails), and IBM's `ado` framework for reproducible agent experimentation. Rather than just taking notes, I built a small working system that touches all three ideas at once:
 
-A question goes through a **4-agent pipeline** — a planner breaks it into sub-questions, a researcher answers them, a guardrail agent checks the research for risk or low confidence (and can block the pipeline outright), and a synthesiser writes the final answer. Every step is timed, logged, and saved to disk so past runs can be reviewed or compared later — that's the reproducibility piece from the `ado` talk.
+A question goes through a **4-agent pipeline** - a planner breaks it into sub-questions, a researcher answers them, a guardrail agent checks the research for risk or low confidence (and can block the pipeline outright), and a synthesiser writes the final answer. Every step is timed, logged, and saved to disk so past runs can be reviewed or compared later -that's the reproducibility piece from the `ado` talk.
 
 Supports **two free LLM providers**, switchable right in the UI:
 
@@ -62,7 +64,7 @@ You only need **one** of these — pick whichever suits you. You can also set up
    ```
 3. Make sure Ollama is running (it usually auto-starts; on Linux run `ollama serve`)
 
-#### Option B — Groq (free hosted API)
+#### Option B - Groq (free hosted API)
 
 1. Sign up free at **https://console.groq.com** (no credit card)
 2. Create an API key
@@ -86,11 +88,11 @@ Go to **http://localhost:8000** — use the toggle next to "run pipeline" to swi
 ## Choosing models
 
 ```bash
-# Ollama — use any model you've pulled
+# Ollama - use any model you've pulled
 export OLLAMA_MODEL=mistral
 ollama pull mistral
 
-# Groq — pick from their free model list
+# Groq - pick from their free model list
 export GROQ_MODEL=llama-3.1-8b-instant   # faster, lighter
 # or
 export GROQ_MODEL=llama-3.3-70b-versatile  # default, stronger
