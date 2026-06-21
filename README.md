@@ -139,35 +139,10 @@ curl -X POST http://localhost:8000/api/run \
 ---
 
 ## How the pipeline works
+<img width="457" height="379" alt="image" src="https://github.com/user-attachments/assets/a351564d-4b59-4f9b-8455-e351171fdc02" />
 
-```
-User question
-     │
-     ▼
-┌─────────────┐
-│   Planner   │  Breaks the question into 3 sub-questions
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│ Researcher  │  Answers each sub-question with facts
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│  Guardrail  │  Checks confidence, flags risk - can BLOCK the pipeline
-└──────┬──────┘
-       │
-  passed/caution?
-       │
-       ▼
-┌─────────────┐
-│ Synthesiser │  Writes the final answer
-└─────────────┘
-       │
-       ▼
-  Saved to experiments/<run_id>.json (includes which provider/model was used)
-```
+
+
 
 All four agents call the **same `call_llm()` function** - they differ only in system prompt and role, and the provider can be swapped per-run without touching the agent logic. This mirrors the orchestration pattern from the NASA AKD talk: the architecture is what matters, not which model sits underneath it.
 
